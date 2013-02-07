@@ -1,0 +1,11 @@
+---
+- hosts: $hosts
+  user: $user
+  sudo: yes
+  sudo_user: root
+
+  vars_files:
+    - vars/main.yml
+
+  tasks:
+    - include: tasks/setup.yml

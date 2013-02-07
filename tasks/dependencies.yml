@@ -1,0 +1,8 @@
+---
+# Install Jenkins dependencies
+- name: Install dependencies
+  apt: pkg=${item} state=installed update-cache=yes
+  with_items: $dependencies
+  tags:
+    - packages
+    - dependencies

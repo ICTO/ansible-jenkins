@@ -1,0 +1,9 @@
+---
+# Jenkins dependencies
+dependencies: 
+  - 'openjdk-6-jre'
+  - 'openjdk-6-jdk'
+  - 'git'
+
+# Jenkins CLI destination
+cli_dest: '/opt/jenkins-cli.jar'

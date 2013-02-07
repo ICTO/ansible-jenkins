@@ -1,0 +1,15 @@
+---
+# Add Jenkins repository
+- include: tasks/repo.yml
+
+# Install dependencies
+- include: tasks/dependencies.yml
+
+# Install Jenkins
+- name: Install Jenkins
+  apt: pkg=jenkins state=installed update-cache=yes
+  tags:
+    - packages
+
+# Install Jenkins cli
+- include: tasks/cli.yml
