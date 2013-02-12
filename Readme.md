@@ -72,6 +72,61 @@ Use *ansible.host* as inventory. Run the playbook only for the remote host *vagr
 $ ansible-playbook -k -i ansible.host ansible-jenkins/setup.yml --extra-vars="hosts=vagrant user=vagrant"
 ```
 
-## Contact
+### Example output
+
+```
+SSH password: 
+
+PLAY [vagrant] ********************* 
+
+GATHERING FACTS ********************* 
+ok: [127.0.0.1]
+
+TASK: [Install python-software-properties] ********************* 
+ok: [127.0.0.1]
+
+TASK: [Add jenkins apt-key] ********************* 
+ok: [127.0.0.1]
+
+TASK: [Add Jenkins repository] ********************* 
+ok: [127.0.0.1]
+
+TASK: [Remove invalid Jenkins src repository] ********************* 
+changed: [127.0.0.1]
+
+TASK: [Install dependencies] ********************* 
+ok: [127.0.0.1] => (item=openjdk-6-jre,openjdk-6-jdk,git,curl)
+
+TASK: [Install Jenkins] ********************* 
+ok: [127.0.0.1]
+
+TASK: [Get Jenkins CLI] ********************* 
+ok: [127.0.0.1]
+
+TASK: [Get Jenkins updates] ********************* 
+ok: [127.0.0.1]
+
+TASK: [Update-center Jenkins] ********************* 
+skipping: [127.0.0.1]
+
+TASK: [Install/update plugins] ********************* 
+skipping: [127.0.0.1] => (item=ldap)
+skipping: [127.0.0.1] => (item=github)
+skipping: [127.0.0.1] => (item=translation)
+skipping: [127.0.0.1] => (item=preSCMbuildstep)
+
+TASK: [10s delay while installing plugins] ********************* 
+skipping: [127.0.0.1]
+
+TASK: [Safe-restart Jenkins] ********************* 
+skipping: [127.0.0.1]
+
+PLAY RECAP ********************* 
+127.0.0.1                      : ok=10   changed=1    unreachable=0    failed=0    
+```
+
+## Docs and contact
+
+Read more on the Wiki pages about how this playbook works.
 
 http://icto.ugent.be

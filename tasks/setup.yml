@@ -8,6 +8,7 @@
 # Install Jenkins
 - name: Install Jenkins
   apt: pkg=jenkins state=installed update-cache=yes
+  register: jenkins_install
   tags:
     - packages
 

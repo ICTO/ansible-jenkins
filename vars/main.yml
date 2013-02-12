@@ -4,6 +4,10 @@ dependencies:
   - 'openjdk-6-jre'
   - 'openjdk-6-jdk'
   - 'git'
+  - 'curl'
 
 # Jenkins CLI destination
 cli_dest: '/opt/jenkins-cli.jar'
+
+# Jenkins updates file
+updates_dest: '/opt/updates_jenkins.json'

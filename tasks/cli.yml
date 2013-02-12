@@ -1,11 +1,12 @@
 ---
 # Handle plugins
-# Wait for pulling the Jenkins CLI, assuming 10s should be sufficiant
-- name: 10s delay while installing plugins
-  wait_for: port=8080 delay=10
-  tags:
-    - plugins
-    - cli
+# If Jenkins is installed or updated, wait for pulling the Jenkins CLI, assuming 10s should be sufficiant
+# - name: 10s delay while installing plugins
+#   wait_for: port=8080 delay=10
+#   only_if: '${jenkins_install.changed}'
+#   tags:
+#     - plugins
+#     - cli
 
 # Get Jenkins CLI from localhost
 - name: Get Jenkins CLI
@@ -13,9 +14,18 @@
   tags:
     - cli
 
+# Get latest Jenkins update file
+- name: Get Jenkins updates
+  get_url: url=http://updates.jenkins-ci.org/update-center.json dest=${updates_dest} thirsty=yes mode=0440
+  register: jenkins_updates
+  tags:
+    - plugins
+    - cli
+
 # Jenkins Update-center
 - name: Update-center Jenkins
-  shell: "curl  -L http://updates.jenkins-ci.org/update-center.json | sed '1d;$d' | curl -X POST -H 'Accept: application/json' -d @- http://localhost:8080/updateCenter/byId/default/postBack"
+  shell: "cat ${updates_dest} | sed '1d;$d' | curl -X POST -H 'Accept: application/json' -d @- http://localhost:8080/updateCenter/byId/default/postBack"
+  only_if: '${jenkins_updates.changed}'
   tags:
     - plugins
     - cli
@@ -23,7 +33,7 @@
 # Install/update Jenkins plugins
 - name: Install/update plugins
   command: java -jar ${cli_dest} -s http://localhost:8080 install-plugin ${item}
-  only_if: is_set('$plugins')
+  only_if: "is_set('$plugins') and ${jenkins_updates.changed}"
   with_items: $plugins
   tags:
     - plugins
@@ -32,6 +42,7 @@
 # Wait for Jenkins to install plugins, assuming 10s should be sufficiant
 - name: 10s delay while installing plugins
   wait_for: port=8080 delay=10
+  only_if: '${jenkins_updates.changed}'
   tags:
     - plugins
     - cli
@@ -39,6 +50,7 @@
 # Safe-restart Jenkins
 - name: Safe-restart Jenkins
   command: java -jar ${cli_dest} -s http://localhost:8080 safe-restart
+  only_if: '${jenkins_updates.changed}'
   tags:
     - plugins
     - cli
