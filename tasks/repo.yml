@@ -5,22 +5,26 @@
 - name: Install python-software-properties
   apt: pkg=python-software-properties state=installed update-cache=yes
   tags:
-    - jenkins-repo
+    - repo
+    - jenkins
 
 # Add Jenkins repository key
 - name: Add jenkins apt-key
-  apt_key: url=http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key state=present
+  apt_key: url=${jenkins.key} state=present
   tags:
-    - jenkins-repo
+    - repo
+    - jenkins
 
 # Add Jenkins repository
 - name: Add Jenkins repository
-  apt_repository: repo='deb http://pkg.jenkins-ci.org/debian binary/' state=present
+  apt_repository: repo='${jenkins.repo}' state=present
   tags:
-    - jenkins-repo
+    - repo
+    - jenkins
 
 # Ugly workaround fixing the auto-add src repo when using apt_repository
 - name: Remove invalid Jenkins src repository
   command: sed --in-place '/deb-src.*pkg.jenkins-ci/d' /etc/apt/sources.list
   tags:
-    - jenkins-repo
+    - repo
+    - jenkins

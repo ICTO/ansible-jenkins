@@ -1,11 +1,12 @@
 ---
-- hosts: $hosts
+- name: "Jenkins playbook"
+  hosts: jenkins
   user: $user
   sudo: yes
   sudo_user: root
 
   vars_files:
-    - vars/main.yml
+    - vars/jenkins.yml
 
   tasks:
     - include: tasks/setup.yml

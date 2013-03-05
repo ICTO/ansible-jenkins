@@ -20,7 +20,7 @@ Playbook tested on *Debian-7.0-b4-amd64*, probably works on other Debian version
 ### Get the code
 
 ```bash
-$ git clone git@github.ugent.be:tberton/ansible-jenkins.git
+$ git clone git@github.com:ICTO/ansible-jenkins.git
 ```
 
 ### Create a host file
@@ -34,7 +34,7 @@ $ vi ansible.host
 with
 
 ```ini
-[vagrant]
+[jenkins]
 127.0.0.1 ansible_ssh_port=2222
 ```
 
@@ -66,18 +66,18 @@ plugins:
 
 ### Run the playbook
 
-Use *ansible.host* as inventory. Run the playbook only for the remote host *vagrant*. Use *vagrant* as the SSH user to connect to the remote host. *-k* enables the SSH password prompt.
+Use *ansible.host* as inventory. Run the playbook only for the remote host *jenkins*. Use *vagrant* as the SSH user to connect to the remote host. *-k* enables the SSH password prompt.
 
 ```bash
-$ ansible-playbook -k -i ansible.host ansible-jenkins/setup.yml --extra-vars="hosts=vagrant user=vagrant"
+$ ansible-playbook -k -i ansible.host ansible-jenkins/setup.yml --extra-vars="user=vagrant"
 ```
 
 ### Example output
 
-```
+``
 SSH password: 
 
-PLAY [vagrant] ********************* 
+PLAY [Jenkins playbook] ********************* 
 
 GATHERING FACTS ********************* 
 ok: [127.0.0.1]
@@ -100,29 +100,35 @@ ok: [127.0.0.1] => (item=openjdk-6-jre,openjdk-6-jdk,git,curl)
 TASK: [Install Jenkins] ********************* 
 ok: [127.0.0.1]
 
+TASK: [10s delay while starting Jenkins] ********************* 
+skipping: [127.0.0.1]
+
+TASK: [Create Jenkins CLI destination directory: /opt/jenkins] ********************* 
+ok: [127.0.0.1]
+
 TASK: [Get Jenkins CLI] ********************* 
 ok: [127.0.0.1]
 
 TASK: [Get Jenkins updates] ********************* 
-ok: [127.0.0.1]
+changed: [127.0.0.1]
 
 TASK: [Update-center Jenkins] ********************* 
-skipping: [127.0.0.1]
+changed: [127.0.0.1]
 
 TASK: [Install/update plugins] ********************* 
-skipping: [127.0.0.1] => (item=ldap)
-skipping: [127.0.0.1] => (item=github)
-skipping: [127.0.0.1] => (item=translation)
-skipping: [127.0.0.1] => (item=preSCMbuildstep)
+changed: [127.0.0.1] => (item=ldap)
+changed: [127.0.0.1] => (item=github)
+changed: [127.0.0.1] => (item=translation)
+changed: [127.0.0.1] => (item=preSCMbuildstep)
 
 TASK: [10s delay while installing plugins] ********************* 
-skipping: [127.0.0.1]
+ok: [127.0.0.1]
 
 TASK: [Safe-restart Jenkins] ********************* 
-skipping: [127.0.0.1]
+changed: [127.0.0.1]
 
 PLAY RECAP ********************* 
-127.0.0.1                      : ok=10   changed=1    unreachable=0    failed=0    
+127.0.0.1                   : ok=14   changed=5    unreachable=0    failed=0    
 ```
 
 ## Docs and contact
