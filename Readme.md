@@ -74,7 +74,7 @@ $ ansible-playbook -k -i ansible.host ansible-jenkins/setup.yml --extra-vars="us
 
 ### Example output
 
-``
+```
 SSH password: 
 
 PLAY [Jenkins playbook] ********************* 
