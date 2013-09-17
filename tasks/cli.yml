@@ -41,7 +41,7 @@
 # Install/update Jenkins plugins
 - name: Install/update plugins
   command: java -jar ${jenkins.cli_dest} -s http://localhost:8080 install-plugin ${item}
-  when: is_set("$plugins") and ${jenkins_updates.changed}
+  when: when $plugins is defined and ${jenkins_updates.changed}
   with_items: $plugins
   tags:
     - jenkins
