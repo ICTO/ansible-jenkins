@@ -1,9 +1,9 @@
 ---
 # Add Jenkins repository
-- include: tasks/repo.yml
+- include: repo.yml
 
 # Install dependencies
-- include: tasks/dependencies.yml
+- include: dependencies.yml
 
 # Install Jenkins
 - name: Install Jenkins
@@ -13,4 +13,4 @@
     - packages
 
 # Install Jenkins cli
-- include: tasks/cli.yml
+- include: cli.yml
