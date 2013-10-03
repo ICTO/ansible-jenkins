@@ -1,0 +1,19 @@
+---
+# Add Jenkins repository
+- include: repo.yml tags=repo
+
+# Install dependencies
+- include: dependencies.yml tags=dependencies
+
+# Install Jenkins
+- name: Install Jenkins
+  action: ${ansible_pkg_mgr} pkg=jenkins state=latest update-cache=yes
+  register: jenkins_install
+
+# Install Jenkins cli
+- include: cli.yml
+
+# Install/update Jenkins plugins
+- include: plugins.yml tags=plugins
+  #when: plugins is defined and jenkins_updates.changed
+  #when: plugins is defined

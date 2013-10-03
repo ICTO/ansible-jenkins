@@ -3,62 +3,24 @@
 # If Jenkins is installed or updated, wait for pulling the Jenkins CLI, assuming 10s should be sufficiant
 - name: 10s delay while starting Jenkins
   wait_for: port=8080 delay=10
-  only_if: ${jenkins_install.changed}
-  tags:
-    - jenkins
-    - cli
+  when: jenkins_install.changed
 
 # Create Jenkins CLI destination directory
 - name: "Create Jenkins CLI destination directory: ${jenkins.dest}"
-  file: path=${jenkins.dest} state=directory
-  tags:
-    - jenkins
-    - cli
+  action: file path={{ jenkins.dest }} state=directory
 
 # Get Jenkins CLI from localhost
 - name: Get Jenkins CLI
-  get_url: url=http://localhost:8080/jnlpJars/jenkins-cli.jar dest=${jenkins.cli_dest} mode=0440
-  tags:
-    - jenkins
-    - cli
+  action: get_url url=http://localhost:8080/jnlpJars/jenkins-cli.jar dest={{ jenkins.cli_dest }} mode=0440
 
 # Get latest Jenkins update file
 - name: Get Jenkins updates
-  get_url: url=http://updates.jenkins-ci.org/update-center.json dest=${jenkins.updates_dest} thirsty=yes mode=0440
+  action: get_url url=http://updates.jenkins-ci.org/update-center.json dest={{ jenkins.updates_dest }} thirsty=yes mode=0440
   register: jenkins_updates
-  tags:
-    - jenkins
-    - cli
 
 # Jenkins Update-center
 - name: Update-center Jenkins
-  shell: "cat ${jenkins.updates_dest} | sed '1d;$d' | curl -X POST -H 'Accept: application/json' -d @- http://localhost:8080/updateCenter/byId/default/postBack"
-  only_if: ${jenkins_updates.changed}
-  tags:
-    - jenkins
-    - cli
-
-# Install/update Jenkins plugins
-- name: Install/update plugins
-  command: java -jar ${jenkins.cli_dest} -s http://localhost:8080 install-plugin ${item}
-  only_if: is_set("$plugins") and ${jenkins_updates.changed}
-  with_items: $plugins
-  tags:
-    - jenkins
-    - cli
-
-# Wait for Jenkins to install plugins, assuming 10s should be sufficiant
-- name: 10s delay while installing plugins
-  wait_for: port=8080 delay=10
-  only_if: ${jenkins_updates.changed}
-  tags:
-    - jenkins
-    - cli
-
-# Safe-restart Jenkins
-- name: Safe-restart Jenkins
-  command: java -jar ${jenkins.cli_dest} -s http://localhost:8080 safe-restart
-  only_if: ${jenkins_updates.changed}
-  tags:
-    - jenkins
-    - cli
+  action: "shell cat {{ jenkins.updates_dest }} | sed '1d;$d' | curl -X POST -H 'Accept: application/json' -d @- http://localhost:8080/updateCenter/byId/default/postBack"
+  when: jenkins_updates.changed
+  notify:
+    - 'Restart Jenkins'

@@ -2,18 +2,24 @@
 
 ## Description
 
-*ansible-jenkins* is an [Ansible](http://ansible.cc) playbook.
-The playbook contains tasks to install Jenkins and install/update plugins.
+*ansible-jenkins* is an [Ansible](http://ansible.cc) role.
+Use this role to install Jenkins and install/update plugins.
 
 ## Requirements
 
 ### Ansible
 
-Everything is documented on the [Ansible](http://ansible.cc/docs/gettingstarted.html) site...
+Everything you should know about Ansible is documented on the [Ansible](http://ansible.cc/docs/gettingstarted.html) site...
 
 ### Supported platforms
 
-Playbook tested on *Debian-7.0-b4-amd64*, probably works on other Debian versions too. Heavily depends on *apt*, sorry CentOS users...
+#### Debian wheezy
+
+Playbook tested on *Debian-7.1*.
+
+#### Ansible >= 1.3
+
+Any Ansible version >= 1.3 should work. If not, please use the issue tracker to report any bugs.
 
 ## Usage
 
@@ -22,6 +28,8 @@ Playbook tested on *Debian-7.0-b4-amd64*, probably works on other Debian version
 ```bash
 $ git clone git@github.com:ICTO/ansible-jenkins.git
 ```
+
+The code should reside in the roles directory of ansible ( See [ansible documentation](http://www.ansibleworks.com/docs/playbooks.html#roles) for more information on roles ), in a folder jenkins.
 
 ### Create a host file
 
@@ -66,10 +74,20 @@ plugins:
 
 ### Run the playbook
 
+
+First create a playbook including the jenkins role, naming it jenkins.yml.
+
+```yml
+---
+- hosts: jenkins
+  roles:
+    - jenkins
+```
+
 Use *ansible.host* as inventory. Run the playbook only for the remote host *jenkins*. Use *vagrant* as the SSH user to connect to the remote host. *-k* enables the SSH password prompt.
 
 ```bash
-$ ansible-playbook -k -i ansible.host ansible-jenkins/setup.yml --extra-vars="user=vagrant"
+$ ansible-playbook -k -i ansible.host jenkins.yml --extra-vars="user=vagrant"
 ```
 
 ### Example output
