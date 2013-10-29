@@ -10,14 +10,14 @@
 
 # Add Jenkins repository key
 - name: Add jenkins apt-key
-  apt_key: url=${jenkins.key} state=present
+  apt_key: url={{ jenkins.key }} state=present
   tags:
     - repo
     - jenkins
 
 # Add Jenkins repository
 - name: Add Jenkins repository
-  apt_repository: repo='${jenkins.repo}' state=present
+  apt_repository: repo='{{ jenkins.repo }}' state=present
   tags:
     - repo
     - jenkins

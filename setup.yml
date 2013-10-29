@@ -1,7 +1,7 @@
 ---
 - name: "Jenkins playbook"
   hosts: jenkins
-  user: $user
+  user: {{ user }}
   sudo: yes
   sudo_user: root
 
