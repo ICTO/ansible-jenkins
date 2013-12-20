@@ -1,8 +1,57 @@
 ---
 placeholder: 'placeholder'
-# plugins:
-#   - 'ldap'
-#   - 'github'
-#   - 'translation'
-#   - 'preSCMbuildstep'
-#   - 'gravatar'
+plugins:
+  - ansicolor
+  - ant
+  - build-cause-run-condition
+  - build-name-setter
+  - build-pipeline-plugin
+  - build-timeout
+  - campfire
+  - chucknorris
+  - clone-workspace-scm
+  - conditional-buildstep
+  - copyartifact
+  - credentials
+  - cvs
+  - downstream-ext
+  - envinject
+  - external-monitor-job
+  - ghprb
+  - git
+  - git-client
+  - github
+  - github-api
+  - github-oauth
+  - gitlab-hook
+  - git-parameter
+  - gravatar
+  - greenballs
+  - heavy-job
+  - javadoc
+  - jenkins-leiningen
+  - jquery
+  - ldap
+  - mailer
+  - maven-plugin
+  - msbuild
+  - nunit
+  - pam-auth
+  - parameterized-trigger
+  - powershell
+  - rbenv
+  - ruby-runtime
+  - run-condition
+  - s3
+  - scm-sync-configuration
+  - sms-notification
+  - ssh-agent
+  - ssh-credentials
+  - ssh-slaves
+  - subversion
+  - text-finder-run-condition
+  - token-macro
+  - translation
+  - versionnumber
+  - view-job-filters
+jenkins_startup_delay: 10 # in seconds
