@@ -1,8 +1,8 @@
 ---
 # Handle plugins
 # If Jenkins is installed or updated, wait for pulling the Jenkins CLI, assuming 10s should be sufficiant
-- name: 10s delay while starting Jenkins
-  wait_for: port=8080 delay=10
+- name: "{{ jenkins.startup_delay }}s delay while starting Jenkins"
+  wait_for: port=8080 delay={{ jenkins_startup_delay }}
   when: jenkins_install.changed
 
 # Create Jenkins CLI destination directory
