@@ -1,5 +1,6 @@
 ---
 # Install Jenkins dependencies
 - name: Install dependencies
+  sudo: yes
   action: ${ansible_pkg_mgr} pkg={{ item }} state=installed update-cache=yes
-  with_items: jenkins.dependencies
+  with_items: jenkins.deb.dependencies

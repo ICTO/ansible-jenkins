@@ -1,16 +1,19 @@
 ---
 # Provides add-apt-repository
 - name: Install python-software-properties
+  sudo: yes
   action: ${ansible_pkg_mgr} pkg=python-software-properties state=installed update-cache=yes
 
 # Add Jenkins repository key
 - name: Add jenkins apt-key
-  action: apt_key url={{ jenkins.key }} state=present
+  sudo: yes
+  action: apt_key url={{ jenkins.deb.key }} state=present
 
 # Add Jenkins repository
 - name: Add Jenkins repository
-  action: apt_repository repo='{{ jenkins.repo }}' state=present
+  sudo: yes
+  action: apt_repository repo='{{ jenkins.deb.repo }}' state=present
 
 # Ugly workaround fixing the auto-add src repo when using apt_repository
-- name: Remove invalid Jenkins src repository
-  action: command sed --in-place '/deb-src.*pkg.jenkins-ci/d' /etc/apt/sources.list
+#- name: Remove invalid Jenkins src repository
+#  action: command sed --in-place '/deb-src.*pkg.jenkins-ci/d' /etc/apt/sources.list

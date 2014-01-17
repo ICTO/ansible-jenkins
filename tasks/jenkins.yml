@@ -1,0 +1,21 @@
+---
+# Add Jenkins repository
+- include: repo.yml 
+  when: ansible_distribution in [ 'Debian', 'Ubuntu' ]
+
+# Install dependencies
+- include: dependencies_deb.yml
+  when: ansible_distribution in [ 'Debian', 'Ubuntu' ]
+
+# Install Jenkins
+- name: Install Jenkins
+  sudo: yes
+  action: ${ansible_pkg_mgr} pkg=jenkins state=latest update-cache=yes
+  when: ansible_distribution in [ 'Debian', 'Ubuntu' ]
+  register: jenkins_install
+
+# Install Jenkins cli
+- include: cli.yml
+
+# Install/update Jenkins plugins
+- include: plugins.yml
