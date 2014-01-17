@@ -5,21 +5,16 @@
 *ansible-jenkins* is an [Ansible](http://ansible.cc) role.
 Use this role to install Jenkins and install/update plugins.
 
-## Requirements
+## Provides
 
-### Ansible
+1. Latest Jenkins server
+2. Jenkins plugins support
 
-Everything you should know about Ansible is documented on the [Ansible](http://ansible.cc/docs/gettingstarted.html) site...
+## Requires
 
-### Supported platforms
-
-#### Debian wheezy
-
-Playbook tested on *Debian-7.1*.
-
-#### Ansible >= 1.3
-
-Any Ansible version >= 1.3 should work. If not, please use the issue tracker to report any bugs.
+1. Ansible 1.4 or higher
+2. Debian 7.3 (other deb-based distros should work too)
+3. Vagrant (optional)
 
 ## Usage
 
@@ -78,16 +73,16 @@ plugins:
 First create a playbook including the jenkins role, naming it jenkins.yml.
 
 ```yml
----
-- hosts: jenkins
+- name: Jenkins
+  hosts: jenkins
   roles:
-    - jenkins
+    - ansible-jenkins
 ```
 
 Use *ansible.host* as inventory. Run the playbook only for the remote host *jenkins*. Use *vagrant* as the SSH user to connect to the remote host. *-k* enables the SSH password prompt.
 
 ```bash
-$ ansible-playbook -k -i ansible.host jenkins.yml --extra-vars="user=vagrant"
+$ ansible-playbook -k -i ansible.host jenkins.yml -u vagrant
 ```
 
 ### Example output
@@ -95,68 +90,56 @@ $ ansible-playbook -k -i ansible.host jenkins.yml --extra-vars="user=vagrant"
 ```
 SSH password: 
 
-PLAY [jenkins] **************************************************************** 
+PLAY [Jenkins] **************************************************************** 
 
 GATHERING FACTS *************************************************************** 
 ok: [127.0.0.1]
 
-TASK: [Install python-software-properties] ************************************ 
+TASK: [ansible-jenkins | Install python-software-properties] ****************** 
 ok: [127.0.0.1]
 
-TASK: [Add jenkins apt-key] *************************************************** 
-changed: [127.0.0.1]
+TASK: [ansible-jenkins | Add jenkins apt-key] ********************************* 
+ok: [127.0.0.1]
 
-TASK: [Add Jenkins repository] ************************************************ 
-changed: [127.0.0.1]
+TASK: [ansible-jenkins | Add Jenkins repository] ****************************** 
+ok: [127.0.0.1]
 
-TASK: [Remove invalid Jenkins src repository] ********************************* 
-changed: [127.0.0.1]
-
-TASK: [Install dependencies] ************************************************** 
-changed: [127.0.0.1] => (item=openjdk-6-jre)
-changed: [127.0.0.1] => (item=openjdk-6-jdk)
-changed: [127.0.0.1] => (item=git)
+TASK: [ansible-jenkins | Install dependencies] ******************************** 
+ok: [127.0.0.1] => (item=openjdk-6-jre)
+ok: [127.0.0.1] => (item=openjdk-6-jdk)
+ok: [127.0.0.1] => (item=git)
 ok: [127.0.0.1] => (item=curl)
 
-TASK: [Install Jenkins] ******************************************************* 
-changed: [127.0.0.1]
-
-TASK: [10s delay while starting Jenkins] ************************************** 
+TASK: [ansible-jenkins | Install Jenkins] ************************************* 
 ok: [127.0.0.1]
 
-TASK: [Create Jenkins CLI destination directory: /opt/jenkins] **************** 
-changed: [127.0.0.1]
-
-TASK: [Get Jenkins CLI] ******************************************************* 
-changed: [127.0.0.1]
-
-TASK: [Get Jenkins updates] *************************************************** 
-changed: [127.0.0.1]
-
-TASK: [Update-center Jenkins] ************************************************* 
-changed: [127.0.0.1]
-
-TASK: [List plugins] ********************************************************** 
+TASK: [ansible-jenkins | 10s delay while starting Jenkins] ******************** 
 skipping: [127.0.0.1]
 
-TASK: [Install/update plugins] ************************************************ 
+TASK: [ansible-jenkins | Create Jenkins CLI destination directory: /opt/jenkins] *** 
+ok: [127.0.0.1]
+
+TASK: [ansible-jenkins | Get Jenkins CLI] ************************************* 
+ok: [127.0.0.1]
+
+TASK: [ansible-jenkins | Get Jenkins updates] ********************************* 
+ok: [127.0.0.1]
+
+TASK: [ansible-jenkins | Update-center Jenkins] ******************************* 
+skipping: [127.0.0.1]
+
+TASK: [ansible-jenkins | List plugins] **************************************** 
+skipping: [127.0.0.1]
+
+TASK: [ansible-jenkins | Install/update plugins] ****************************** 
 skipping: [127.0.0.1] => (item=plugins)
 
-TASK: [List plugins to be updated] ******************************************** 
+TASK: [ansible-jenkins | List plugins to be updated] ************************** 
 changed: [127.0.0.1]
 
-TASK: [Update plugins] ******************************************************** 
-changed: [127.0.0.1]
-
-NOTIFIED: [Restart Jenkins] *************************************************** 
-changed: [127.0.0.1]
+TASK: [ansible-jenkins | Update plugins] ************************************** 
+skipping: [127.0.0.1]
 
 PLAY RECAP ******************************************************************** 
-127.0.0.1              : ok=15   changed=7    unreachable=0    failed=0   
+127.0.0.1                  : ok=11   changed=1    unreachable=0    failed=0  
 ```
-
-## Docs and contact
-
-Read more on the Wiki pages about how this playbook works.
-
-http://icto.ugent.be
