@@ -4,8 +4,8 @@ jenkins:
     repo: 'deb http://pkg.jenkins-ci.org/debian binary/' # Jenkins repository
     key: 'http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key' # Jenkins key
     dependencies: # Jenkins dependencies
-      - 'openjdk-6-jre'
-      - 'openjdk-6-jdk'
+      - 'openjdk-7-jre'
+      - 'openjdk-7-jdk'
       - 'git'
       - 'curl'
   dest: '/opt/jenkins'
