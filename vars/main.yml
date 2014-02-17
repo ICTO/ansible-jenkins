@@ -9,5 +9,5 @@ jenkins:
       - 'git'
       - 'curl'
   dest: '/opt/jenkins'
-  cli_dest: '${jenkins.dest}/jenkins-cli.jar' # Jenkins CLI destination
-  updates_dest: '${jenkins.dest}/updates_jenkins.json' # Jenkins updates file
+  cli_dest: '{{ jenkins.dest }}/jenkins-cli.jar' # Jenkins CLI destination
+  updates_dest: '{{ jenkins.dest }}/updates_jenkins.json' # Jenkins updates file
