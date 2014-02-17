@@ -8,7 +8,7 @@
 # Create Jenkins CLI destination directory
 - name: "Create Jenkins CLI destination directory: ${jenkins.dest}"
   sudo: yes
-  action: file path={{ jenkins.dest }} state=directory
+  action: file path={{ jenkins_dest }} state=directory
 
 # Get Jenkins CLI from localhost
 - name: Get Jenkins CLI
