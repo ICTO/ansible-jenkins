@@ -4,6 +4,10 @@
   sudo: yes
   action: "{{ ansible_pkg_mgr }} pkg=python-software-properties state=installed update-cache=yes"
 
+- name: Install python-pycurl
+  sudo: yes
+  action: "{{ ansible_pkg_mgr }} pkg=python-pycurl state=installed update-cache=yes"
+
 # Add Jenkins repository key
 - name: Add jenkins apt-key
   sudo: yes
