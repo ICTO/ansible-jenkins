@@ -16,8 +16,4 @@
 # Add Jenkins repository
 - name: Add Jenkins repository
   sudo: yes
-  action: apt_repository repo='{{ jenkins.deb.repo }}' state=present
-
-# Ugly workaround fixing the auto-add src repo when using apt_repository
-#- name: Remove invalid Jenkins src repository
-#  action: command sed --in-place '/deb-src.*pkg.jenkins-ci/d' /etc/apt/sources.list
+  action: apt_repository repo='{{ jenkins.deb.repo }}' state=present update_cache=yes
