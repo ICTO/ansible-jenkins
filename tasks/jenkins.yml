@@ -10,7 +10,7 @@
 # Install Jenkins
 - name: Install Jenkins
   sudo: yes
-  action: "{{ ansible_pkg_mgr }} pkg=jenkins state=latest update-cache=yes"
+  action: "{{ ansible_pkg_mgr }} pkg=jenkins state=latest update_cache=yes cache_valid_time=86400"
   when: ansible_distribution in [ 'Debian', 'Ubuntu' ]
   register: jenkins_install
 
