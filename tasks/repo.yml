@@ -11,7 +11,7 @@
 # Add Jenkins repository key
 - name: Add jenkins apt-key
   sudo: yes
-  action: apt_key url={{ jenkins.deb.key }} state=present
+  action: apt_key data="{{ lookup('file', 'jenkins-ci.org.key') }}" state=present
 
 # Add Jenkins repository
 - name: Add Jenkins repository
