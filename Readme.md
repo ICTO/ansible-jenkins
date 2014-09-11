@@ -67,6 +67,10 @@ plugins:
   - 'preSCMbuildstep'
 port: 8081
 prefix: '/build'
+email:
+  smtp_host: 'mail.example.com'
+  smtp_ssl: 'true'
+  default_email_suffix: '@example.com'
 ```
 
 ### Run the playbook

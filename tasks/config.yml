@@ -9,3 +9,8 @@
   sudo: yes
   when: prefix is defined
   lineinfile: dest=/etc/default/jenkins regexp=^PREFIX= line=PREFIX={{prefix}}
+
+- name: Configure Jenkins E-mail
+  sudo: yes
+  when: email is defined
+  template: src=hudson.tasks.Mailer.xml.j2 dest={{ jenkins_lib }}/hudson.tasks.Mailer.xml owner=jenkins group=jenkins mode=0644
