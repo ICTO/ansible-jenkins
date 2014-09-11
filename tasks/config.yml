@@ -1,0 +1,11 @@
+---
+
+- name: Configure Jenkins Port
+  sudo: yes
+  when: port is defined
+  lineinfile: dest=/etc/default/jenkins regexp=^HTTP_PORT= line=HTTP_PORT={{port}}
+
+- name: Configure Jenkins Prefix
+  sudo: yes
+  when: prefix is defined
+  lineinfile: dest=/etc/default/jenkins regexp=^PREFIX= line=PREFIX={{prefix}}

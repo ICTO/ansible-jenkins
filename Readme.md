@@ -65,6 +65,8 @@ plugins:
   - 'github'
   - 'translation'
   - 'preSCMbuildstep'
+port: 8081
+prefix: '/build'
 ```
 
 ### Run the playbook
@@ -88,58 +90,58 @@ $ ansible-playbook -k -i ansible.host jenkins.yml -u vagrant
 ### Example output
 
 ```
-SSH password: 
+SSH password:
 
-PLAY [Jenkins] **************************************************************** 
+PLAY [Jenkins] ****************************************************************
 
-GATHERING FACTS *************************************************************** 
+GATHERING FACTS ***************************************************************
 ok: [127.0.0.1]
 
-TASK: [ansible-jenkins | Install python-software-properties] ****************** 
+TASK: [ansible-jenkins | Install python-software-properties] ******************
 ok: [127.0.0.1]
 
-TASK: [ansible-jenkins | Add jenkins apt-key] ********************************* 
+TASK: [ansible-jenkins | Add jenkins apt-key] *********************************
 ok: [127.0.0.1]
 
-TASK: [ansible-jenkins | Add Jenkins repository] ****************************** 
+TASK: [ansible-jenkins | Add Jenkins repository] ******************************
 ok: [127.0.0.1]
 
-TASK: [ansible-jenkins | Install dependencies] ******************************** 
+TASK: [ansible-jenkins | Install dependencies] ********************************
 ok: [127.0.0.1] => (item=openjdk-6-jre)
 ok: [127.0.0.1] => (item=openjdk-6-jdk)
 ok: [127.0.0.1] => (item=git)
 ok: [127.0.0.1] => (item=curl)
 
-TASK: [ansible-jenkins | Install Jenkins] ************************************* 
+TASK: [ansible-jenkins | Install Jenkins] *************************************
 ok: [127.0.0.1]
 
-TASK: [ansible-jenkins | 10s delay while starting Jenkins] ******************** 
+TASK: [ansible-jenkins | 10s delay while starting Jenkins] ********************
 skipping: [127.0.0.1]
 
-TASK: [ansible-jenkins | Create Jenkins CLI destination directory: /opt/jenkins] *** 
+TASK: [ansible-jenkins | Create Jenkins CLI destination directory: /opt/jenkins] ***
 ok: [127.0.0.1]
 
-TASK: [ansible-jenkins | Get Jenkins CLI] ************************************* 
+TASK: [ansible-jenkins | Get Jenkins CLI] *************************************
 ok: [127.0.0.1]
 
-TASK: [ansible-jenkins | Get Jenkins updates] ********************************* 
+TASK: [ansible-jenkins | Get Jenkins updates] *********************************
 ok: [127.0.0.1]
 
-TASK: [ansible-jenkins | Update-center Jenkins] ******************************* 
+TASK: [ansible-jenkins | Update-center Jenkins] *******************************
 skipping: [127.0.0.1]
 
-TASK: [ansible-jenkins | List plugins] **************************************** 
+TASK: [ansible-jenkins | List plugins] ****************************************
 skipping: [127.0.0.1]
 
-TASK: [ansible-jenkins | Install/update plugins] ****************************** 
+TASK: [ansible-jenkins | Install/update plugins] ******************************
 skipping: [127.0.0.1] => (item=plugins)
 
-TASK: [ansible-jenkins | List plugins to be updated] ************************** 
+TASK: [ansible-jenkins | List plugins to be updated] **************************
 changed: [127.0.0.1]
 
-TASK: [ansible-jenkins | Update plugins] ************************************** 
+TASK: [ansible-jenkins | Update plugins] **************************************
 skipping: [127.0.0.1]
 
-PLAY RECAP ******************************************************************** 
+PLAY RECAP ********************************************************************
 127.0.0.1                  : ok=11   changed=1    unreachable=0    failed=0  
 ```

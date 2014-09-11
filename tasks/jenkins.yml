@@ -19,3 +19,6 @@
 
 # Install/update Jenkins plugins
 - include: plugins.yml
+
+# Run configuration
+- include: config.yml
