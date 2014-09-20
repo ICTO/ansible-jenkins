@@ -1,9 +1,9 @@
 ---
 jenkins_dest: /opt/jenkins
+jenkins_lib: /var/lib/jenkins
 jenkins:
   deb:
     repo: 'deb http://pkg.jenkins-ci.org/debian binary/' # Jenkins repository
-    key: 'http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key' # Jenkins key
     dependencies: # Jenkins dependencies
       - 'openjdk-7-jre'
       - 'openjdk-7-jdk'
