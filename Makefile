@@ -16,6 +16,9 @@ natpf:
 clean_natpf:
 	VBoxManage controlvm "ansible-jenkins" natpf1 delete tcp_8080_8080
 
+distclean: clean clean_natpf
+	rm -rf .e symlink.jenkins
+
 # Install ansible
 ansible: .e/bin/ansible
 .e/bin/ansible: .e
