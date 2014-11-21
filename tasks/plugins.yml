@@ -1,13 +1,11 @@
 ---
 - name: List plugins
-  sudo: yes
   action: shell java -jar {{ jenkins.cli_dest }} -s http://localhost:8080 list-plugins | cut -f 1 -d ' '
   when: plugins is defined
   register: plugins_installed
 
 # Install/update Jenkins plugins
 - name: Install/update plugins
-  sudo: yes
   action: command java -jar {{ jenkins.cli_dest }} -s http://localhost:8080 install-plugin {{ item }}
   when: plugins_installed.changed and plugins_installed.stdout.find('{{ item }}') == -1
   with_items: plugins
@@ -15,12 +13,10 @@
     - 'Restart Jenkins'
 
 - name: List plugins to be updated
-  sudo: yes
   action: shell java -jar {{ jenkins.cli_dest }} -s http://localhost:8080 list-plugins | grep ')$' | cut -f 1 -d ' ' | sed ':a;N;$!ba;s/\n/ /g'
   register: plugins_updates
 
 - name: Update plugins
-  sudo: yes
   action: command java -jar {{ jenkins.cli_dest }} -s http://localhost:8080 install-plugin {{ plugins_updates.stdout }}
   when: plugins_updates.stdout != ''
   notify:
