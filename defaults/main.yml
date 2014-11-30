@@ -1,4 +1,5 @@
 ---
+jenkins_key: http://pkg.jenkins-ci.org/debian-stable/jenkins-ci.org.key
 placeholder: 'placeholder'
 # plugins:
 #   - 'ldap'
