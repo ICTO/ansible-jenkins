@@ -1,6 +1,7 @@
 ---
 jenkins_dest: /opt/jenkins
 jenkins_lib: /var/lib/jenkins
+jenkins_auth_params: # Parameters required to log in to Jenkins CLI
 jenkins:
   deb:
     repo: 'deb http://pkg.jenkins-ci.org/debian binary/' # Jenkins repository
