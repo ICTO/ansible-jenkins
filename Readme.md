@@ -73,6 +73,22 @@ email:
   default_email_suffix: '@example.com'
 ```
 
+If your installation of Jenkins requires authentication, set it in the `jenkins_auth_params` variable.
+
+For username/password authentication:
+
+```yaml
+jenkins_auth_params: --username yourusername --password yourpassword
+```
+
+or using key based authentication:
+
+```yaml
+jenkins_auth_params: -i your_private_key_file.pem
+```
+
+See [the Jenkins CLI documentation](https://wiki.jenkins-ci.org/display/JENKINS/Jenkins+CLI#JenkinsCLI-WorkingwithCredentials) for more details of the authentication parameters.
+
 ### Run the playbook
 
 
