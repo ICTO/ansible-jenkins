@@ -13,7 +13,7 @@
 # Get Jenkins CLI from localhost
 - name: Get Jenkins CLI
   sudo: yes
-  action: get_url url=http://localhost:8080/jnlpJars/jenkins-cli.jar dest={{ jenkins.cli_dest }} mode=0440
+  command: wget http://localhost:8080/jnlpJars/jenkins-cli.jar -O {{ jenkins.cli_dest }} creates={{ jenkins.cli_dest }}
 
 # Get latest Jenkins update file
 - name: Get Jenkins updates
