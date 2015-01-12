@@ -1,3 +1,2 @@
 ---
 - include: jenkins.yml tags=jenkins
-  when: ansible_distribution in [ 'Debian', 'Ubuntu' ]

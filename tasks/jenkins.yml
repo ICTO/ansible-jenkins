@@ -1,9 +1,7 @@
 ---
 - include: repo.yml
-  when: ansible_distribution in [ 'Debian', 'Ubuntu' ]
 
 - include: dependencies_deb.yml
-  when: ansible_distribution in [ 'Debian', 'Ubuntu' ]
 
 - name: Install Jenkins
   apt: name=jenkins state=latest
