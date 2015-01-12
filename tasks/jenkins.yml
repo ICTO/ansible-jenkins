@@ -6,8 +6,7 @@
   when: ansible_distribution in [ 'Debian', 'Ubuntu' ]
 
 - name: Install Jenkins
-  action: "{{ ansible_pkg_mgr }} pkg=jenkins state=latest"
-  when: ansible_distribution in [ 'Debian', 'Ubuntu' ]
+  apt: name=jenkins state=latest
   register: jenkins_install
 
 - include: cli.yml

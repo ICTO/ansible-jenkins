@@ -1,12 +1,12 @@
 ---
 - name: Install python-software-properties
-  action: "{{ ansible_pkg_mgr }} pkg=python-software-properties state=installed update_cache=yes cache_valid_time=86400"
+  apt: name=python-software-properties state=installed update_cache=yes cache_valid_time=86400
 
 - name: Install python-pycurl
-  action: "{{ ansible_pkg_mgr }} pkg=python-pycurl state=installed"
+  apt: name=python-pycurl state=installed
 
 - name: Add jenkins apt-key
-  action: apt_key data="{{ lookup('file', 'jenkins-ci.org.key') }}" state=present
+  apt_key: data="{{ lookup('file', 'jenkins-ci.org.key') }}" state=present
 
 - name: Add Jenkins repository
-  action: apt_repository repo='{{ jenkins.deb.repo }}' state=present update_cache=yes
+  apt_repository: repo='{{ jenkins.deb.repo }}' state=present update_cache=yes
