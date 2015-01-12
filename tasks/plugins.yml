@@ -4,7 +4,6 @@
   when: plugins is defined
   register: plugins_installed
 
-# Install/update Jenkins plugins
 - name: Install/update plugins
   action: command java -jar {{ jenkins.cli_dest }} -s http://localhost:8080 install-plugin {{ item }}
   when: plugins_installed.changed and plugins_installed.stdout.find('{{ item }}') == -1
