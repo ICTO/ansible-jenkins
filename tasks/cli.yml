@@ -4,8 +4,6 @@
   wait_for: port=8080 delay={{ startup_delay_s | default(10) }}
   when: jenkins_install.changed
 
-- name: "Create Jenkins CLI destination directory: ${jenkins.dest}"
-  action: file path={{ jenkins_dest }} state=directory
 - name: "Create Jenkins CLI destination directory: {{ jenkins_dest }}"
   file: path={{ jenkins_dest }} state=directory
 
