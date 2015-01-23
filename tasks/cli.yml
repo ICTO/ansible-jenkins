@@ -2,7 +2,7 @@
 # Handle plugins
 # If Jenkins is installed or updated, wait for pulling the Jenkins CLI
 - name: "{{ startup_delay_s | default(10) }}s delay while starting Jenkins"
-  wait_for: port=8080 delay={{ startup_delay_s | default(10) }}
+  wait_for: port={{ port }} delay={{ startup_delay_s | default(10) }}
   when: jenkins_install.changed
 
 # Create Jenkins CLI destination directory
@@ -13,7 +13,7 @@
 # Get Jenkins CLI from localhost
 - name: Get Jenkins CLI
   sudo: yes
-  action: get_url url=http://localhost:8080/jnlpJars/jenkins-cli.jar dest={{ jenkins.cli_dest }} mode=0440
+  action: get_url url=http://localhost:{{ port }}/jnlpJars/jenkins-cli.jar dest={{ jenkins.cli_dest }} mode=0440
 
 # Get latest Jenkins update file
 - name: Get Jenkins updates
@@ -24,7 +24,7 @@
 # Jenkins Update-center
 - name: Update-center Jenkins
   sudo: yes
-  action: "shell cat {{ jenkins.updates_dest }} | sed '1d;$d' | curl -X POST -H 'Accept: application/json' -d @- http://localhost:8080/updateCenter/byId/default/postBack"
+  action: "shell cat {{ jenkins.updates_dest }} | sed '1d;$d' | curl -X POST -H 'Accept: application/json' -d @- http://localhost:{{ port }}/updateCenter/byId/default/postBack"
   when: jenkins_updates.changed
   notify:
     - 'Restart Jenkins'
