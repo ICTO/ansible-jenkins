@@ -7,6 +7,8 @@
   apt: name=jenkins state=latest
   register: jenkins_install
 
+- include: config.yml
+
 - include: cli.yml
 
 - include: plugins.yml

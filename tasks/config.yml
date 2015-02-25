@@ -1,8 +1,12 @@
 ---
 
 - name: Configure Jenkins Port
-  when: port is defined
   lineinfile: dest=/etc/default/jenkins regexp=^HTTP_PORT= line=HTTP_PORT={{port}}
+  register: config_changed
+
+- name: Restart jenkins now
+  service: name=jenkins state=restarted
+  when: config_changed.changed
 
 - name: Configure Jenkins Prefix
   when: prefix is defined
