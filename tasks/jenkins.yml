@@ -14,11 +14,11 @@
   when: ansible_distribution in [ 'Debian', 'Ubuntu' ]
   register: jenkins_install
 
+# Run configuration
+- include: config.yml
+
 # Install Jenkins cli
 - include: cli.yml
 
 # Install/update Jenkins plugins
 - include: plugins.yml
-
-# Run configuration
-- include: config.yml

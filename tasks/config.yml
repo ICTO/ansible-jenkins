@@ -4,6 +4,8 @@
   sudo: yes
   when: port is defined
   lineinfile: dest=/etc/default/jenkins regexp=^HTTP_PORT= line=HTTP_PORT={{port}}
+  notify:
+    - 'Hard Restart Jenkins'
 
 - name: Configure Jenkins Prefix
   sudo: yes
