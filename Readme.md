@@ -21,7 +21,7 @@ Use this role to install Jenkins and install/update plugins.
 ### Get the code
 
 ```bash
-$ git clone git@github.com:ICTO/ansible-jenkins.git
+$ git clone https://github.com/danvaida/ansible-jenkins.git roles
 ```
 
 The code should reside in the roles directory of ansible ( See [ansible documentation](http://www.ansibleworks.com/docs/playbooks.html#roles) for more information on roles ), in a folder jenkins.
@@ -38,7 +38,7 @@ with
 
 ```ini
 [jenkins]
-127.0.0.1 ansible_ssh_port=2222
+127.0.0.1 ansible_ssh_port=2222 ansible_ssh_user=vagrant ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key 
 ```
 
 ### Create host specific variables
@@ -81,6 +81,7 @@ First create a playbook including the jenkins role, naming it jenkins.yml.
 ```yml
 - name: Jenkins
   hosts: jenkins
+  sudo: yes
   roles:
     - ansible-jenkins
 ```
@@ -88,7 +89,7 @@ First create a playbook including the jenkins role, naming it jenkins.yml.
 Use *ansible.host* as inventory. Run the playbook only for the remote host *jenkins*. Use *vagrant* as the SSH user to connect to the remote host. *-k* enables the SSH password prompt.
 
 ```bash
-$ ansible-playbook -k -i ansible.host jenkins.yml -u vagrant
+$ ansible-playbook -i ansible.host jenkins.yml
 ```
 
 ### Example output

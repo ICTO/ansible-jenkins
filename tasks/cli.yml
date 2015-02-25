@@ -1,30 +1,25 @@
 ---
 # Handle plugins
-# If Jenkins is installed or updated, wait for pulling the Jenkins CLI
 - name: "{{ startup_delay_s | default(10) }}s delay while starting Jenkins"
   wait_for: port=8080 delay={{ startup_delay_s | default(10) }}
   when: jenkins_install.changed
 
-# Create Jenkins CLI destination directory
-- name: "Create Jenkins CLI destination directory: ${jenkins.dest}"
-  sudo: yes
-  action: file path={{ jenkins_dest }} state=directory
+- name: "Create Jenkins CLI destination directory: {{ jenkins_dest }}"
+  file: path={{ jenkins_dest }} state=directory
 
-# Get Jenkins CLI from localhost
 - name: Get Jenkins CLI
-  sudo: yes
-  action: get_url url=http://localhost:8080/jnlpJars/jenkins-cli.jar dest={{ jenkins.cli_dest }} mode=0440
+  get_url: url=http://localhost:8080/jnlpJars/jenkins-cli.jar dest={{ jenkins.cli_dest }} mode=0440
+  register: jenkins_local_cli
+  until: "'OK' in jenkins_local_cli.msg or 'file already exists' in jenkins_local_cli.msg"
+  retries: 5
+  delay: 10
 
-# Get latest Jenkins update file
 - name: Get Jenkins updates
-  sudo: yes
-  action: get_url url=http://updates.jenkins-ci.org/update-center.json dest={{ jenkins.updates_dest }} thirsty=yes mode=0440
+  get_url: url=http://updates.jenkins-ci.org/update-center.json dest={{ jenkins.updates_dest }} thirsty=yes mode=0440 timeout=30
   register: jenkins_updates
 
-# Jenkins Update-center
 - name: Update-center Jenkins
-  sudo: yes
-  action: "shell cat {{ jenkins.updates_dest }} | sed '1d;$d' | curl -X POST -H 'Accept: application/json' -d @- http://localhost:8080/updateCenter/byId/default/postBack"
+  shell: "cat {{ jenkins.updates_dest }} | sed '1d;$d' | curl -X POST -H 'Accept: application/json' -d @- http://localhost:8080/updateCenter/byId/default/postBack"
   when: jenkins_updates.changed
   notify:
     - 'Restart Jenkins'

@@ -1,19 +1,12 @@
 ---
-# Provides add-apt-repository
 - name: Install python-software-properties
-  sudo: yes
-  action: "{{ ansible_pkg_mgr }} pkg=python-software-properties state=installed"
+  apt: name=python-software-properties state=installed update_cache=yes cache_valid_time=86400
 
 - name: Install python-pycurl
-  sudo: yes
-  action: "{{ ansible_pkg_mgr }} pkg=python-pycurl state=installed"
+  apt: name=python-pycurl state=installed
 
-# Add Jenkins repository key
 - name: Add jenkins apt-key
-  sudo: yes
-  action: apt_key data="{{ lookup('file', 'jenkins-ci.org.key') }}" state=present
+  apt_key: data="{{ lookup('file', 'jenkins-ci.org.key') }}" state=present
 
-# Add Jenkins repository
 - name: Add Jenkins repository
-  sudo: yes
-  action: apt_repository repo='{{ jenkins.deb.repo }}' state=present update_cache=yes
+  apt_repository: repo='{{ jenkins.deb.repo }}' state=present update_cache=yes
