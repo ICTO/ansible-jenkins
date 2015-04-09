@@ -16,7 +16,9 @@
   register: plugins_updates
 
 - name: Update plugins
-  shell: java -jar {{ jenkins.cli_dest }} -s http://localhost:{{ port }} install-plugin {{ plugins_updates.stdout }}
+  shell: java -jar {{ jenkins.cli_dest }} -s http://localhost:{{ port }} install-plugin {{ item }}
+  with_items: plugins_updates.stdout.split()
   when: plugins_updates.stdout != ''
+  ignore_errors: yes
   notify:
     - 'Restart Jenkins'
