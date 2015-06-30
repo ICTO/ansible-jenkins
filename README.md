@@ -21,7 +21,7 @@ Use this role to install Jenkins and install/update plugins.
 ### Get the code
 
 ```bash
-$ git clone https://github.com/danvaida/ansible-jenkins.git roles
+$ git clone https://github.com/ICTO/ansible-jenkins.git roles
 ```
 
 The code should reside in the roles directory of ansible ( See [ansible documentation](http://www.ansibleworks.com/docs/playbooks.html#roles) for more information on roles ), in a folder jenkins.
