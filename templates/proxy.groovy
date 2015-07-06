@@ -1,9 +1,14 @@
-name="{{proxy_host}}";
-port = {{proxy_port}};
-userName="{{proxy_login}}";
-password ="{{proxy_password}}";
-noProxyHost="localhost";
+import jenkins.model.*
 
-pc = new hudson.ProxyConfiguration(name, port, userName, password, noProxyHost);
-jenkins.model.Jenkins.instance.proxy = pc;
+def instance = Jenkins.getInstance()
+
+final String name = "{{proxy_host}}"
+final int port = {{proxy_port}}
+final String userName = "{{proxy_login}}"
+final String password = "{{proxy_password}}"
+final String noProxyHost = "localhost"
+
+final def pc = new hudson.ProxyConfiguration(name, port, userName, password, noProxyHost)
+instance.proxy = pc
+instance.save()
 println "Proxy settings updated!"
