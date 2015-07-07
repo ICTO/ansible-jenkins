@@ -7,3 +7,13 @@ port: 8080
 #   - 'translation'
 #   - 'preSCMbuildstep'
 #   - 'gravatar'
+
+proxy: no
+proxy_host: localhost
+proxy_port: 3128
+proxy_login: login
+proxy_password: password
+proxy_url: "http://{{proxy_login}}:{{proxy_password}}@{{proxy_host}}:{{proxy_port}}"
+proxy_env:
+  http_proxy: "{{proxy_url}}"
+  https_proxy: "{{proxy_url}}"
