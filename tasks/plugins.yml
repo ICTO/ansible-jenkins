@@ -4,7 +4,7 @@
 
 - name: add proxy settings configuration
   shell: cat {{ jenkins_dest }}/proxy.groovy | java -jar {{ jenkins.cli_dest }} -s http://localhost:{{ port }} groovy =
-  when: proxy = "yes"
+  when: proxy == "yes"
 
 - name: List plugins
   shell: java -jar {{ jenkins.cli_dest }} -s http://localhost:{{ port }} list-plugins | cut -f 1 -d ' '
