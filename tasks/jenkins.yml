@@ -34,4 +34,4 @@
 
 - include: plugins.yml
 
-- include: config.yml
+#- include: config.yml
