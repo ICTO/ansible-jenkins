@@ -15,7 +15,7 @@
   delay: 10
 
 - name: Get Jenkins updates
-  get_url: url=https://updates.jenkins-ci.org/update-center.json dest={{ jenkins.updates_dest }} thirsty=yes mode=0440 timeout=30 use_proxy={{proxy}}
+  get_url: url=http://updates.jenkins-ci.org/update-center.json dest={{ jenkins.updates_dest }} thirsty=yes mode=0440 timeout=30 use_proxy={{proxy}}
   environment: proxy_env
   register: jenkins_updates
 
