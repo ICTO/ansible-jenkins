@@ -5,7 +5,7 @@
   when: ansible_os_family == "RedHat"
 
 - name: Configure Jenkins Port for RedHat
-  lineinfile: dest=/etc/sysconfig/jenkins regexp=^HTTP_PORT= line=HTTP_PORT={{port}}
+  lineinfile: dest=/etc/sysconfig/jenkins regexp=^JENKINS_PORT= line=JENKINS_PORT={{port}}
   register: config_changed
   when: ansible_os_family == "RedHat"
 
