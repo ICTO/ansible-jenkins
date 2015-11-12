@@ -1,10 +1,10 @@
 ---
 - template: src=proxy.groovy dest={{ jenkins_dest }}/proxy.groovy
-  when: proxy
+  when: proxy|bool
 
 - name: add proxy settings configuration
   shell: cat {{ jenkins_dest }}/proxy.groovy | java -jar {{ jenkins.cli_dest }} -s http://localhost:{{ port }} groovy =
-  when: proxy
+  when: proxy|bool
 
 - name: List plugins
   shell: java -jar {{ jenkins.cli_dest }} -s http://localhost:{{ port }} list-plugins | cut -f 1 -d ' '
@@ -15,6 +15,7 @@
   shell: java -jar {{ jenkins.cli_dest }} -s http://localhost:{{ port }} install-plugin {{ item }}
   when: plugins_installed.changed and plugins_installed.stdout.find('{{ item }}') == -1
   with_items: plugins
+  ignore_errors: yes
   notify:
     - 'Restart Jenkins'
 

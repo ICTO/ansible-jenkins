@@ -9,5 +9,10 @@ jenkins:
       - 'openjdk-7-jdk'
       - 'git'
       - 'curl'
+  redhat:
+    dependencies:
+      - 'java'
+      - 'git'
+      - 'curl'
   cli_dest: '{{ jenkins_dest }}/jenkins-cli.jar' # Jenkins CLI destination
   updates_dest: '{{ jenkins_dest }}/updates_jenkins.json' # Jenkins updates file

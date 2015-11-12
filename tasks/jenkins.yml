@@ -1,11 +1,32 @@
 ---
+
 - include: repo.yml
 
 - include: dependencies_deb.yml
+  when: ansible_os_family == "Debian"
 
-- name: Install Jenkins
+- include: dependencies_redhat.yml
+  when: ansible_os_family == "RedHat"
+
+- name: Install Jenkins for Debian
   apt: name=jenkins state=latest
   register: jenkins_install
+  when: ansible_os_family == "Debian"
+
+- name: Install Jenkins for RedHat
+  yum: name=jenkins state=latest
+  register: jenkins_install
+  when: ansible_os_family == "RedHat"
+
+- name: Ensure jenkins is running
+  service:
+    name: jenkins
+    state: started
+  when: ansible_os_family == "RedHat"
+
+- name: Start jenkins on boot
+  shell: chkconfig jenkins on
+  when: ansible_os_family == "RedHat"
 
 - include: config.yml
 
@@ -13,4 +34,4 @@
 
 - include: plugins.yml
 
-- include: config.yml
+#- include: config.yml
