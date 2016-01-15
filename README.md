@@ -18,7 +18,13 @@ Use this role to install Jenkins and install/update plugins.
 
 ## Usage
 
-### Get the code
+### Install from Ansible Galaxy
+
+```bash
+$ ansible-galaxy install flyapen.jenkins
+```
+
+### Or download manually
 
 ```bash
 $ git clone https://github.com/ICTO/ansible-jenkins.git roles
