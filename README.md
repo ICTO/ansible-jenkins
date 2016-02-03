@@ -66,14 +66,14 @@ with
 
 ```yaml
 ---
-plugins:
+jenkins_plugins:
   - 'ldap'
   - 'github'
   - 'translation'
   - 'preSCMbuildstep'
-port: 8081
-prefix: '/build'
-email:
+jenkins_port: 8081
+jenkins_prefix: '/build'
+jenkins_email:
   smtp_host: 'mail.example.com'
   smtp_ssl: 'true'
   default_email_suffix: '@example.com'

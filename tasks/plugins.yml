@@ -1,32 +1,32 @@
 ---
 - template: src=proxy.groovy dest={{ jenkins_dest }}/proxy.groovy
-  when: proxy|bool
+  when: jenkins_proxy
 
 - name: add proxy settings configuration
-  shell: cat {{ jenkins_dest }}/proxy.groovy | java -jar {{ jenkins.cli_dest }} -s http://localhost:{{ port }} groovy =
-  when: proxy|bool
+  shell: cat {{ jenkins_dest }}/proxy.groovy | java -jar {{ jenkins.cli_dest }} -s http://localhost:{{ jenkins_port }} groovy =
+  when: jenkins_proxy
 
 - name: List plugins
-  shell: java -jar {{ jenkins.cli_dest }} -s http://localhost:{{ port }} list-plugins | cut -f 1 -d ' '
-  when: plugins is defined
-  register: plugins_installed
+  shell: java -jar {{ jenkins.cli_dest }} -s http://localhost:{{ jenkins_port }} list-plugins | cut -f 1 -d ' '
+  when: jenkins_plugins is defined
+  register: jenkins_plugins_installed
 
 - name: Install/update plugins
-  shell: java -jar {{ jenkins.cli_dest }} -s http://localhost:{{ port }} install-plugin {{ item }}
-  when: plugins_installed.changed and plugins_installed.stdout.find('{{ item }}') == -1
-  with_items: plugins
+  shell: java -jar {{ jenkins.cli_dest }} -s http://localhost:{{ jenkins_port }} install-plugin {{ item }}
+  when: jenkins_plugins_installed.changed and jenkins_plugins_installed.stdout.find('{{ item }}') == -1
+  with_items: jenkins_plugins
   ignore_errors: yes
   notify:
     - 'Restart Jenkins'
 
 - name: List plugins to be updated
-  shell: java -jar {{ jenkins.cli_dest }} -s http://localhost:{{ port }} list-plugins | grep ')$' | cut -f 1 -d ' ' | sed ':a;N;$!ba;s/\n/ /g'
-  register: plugins_updates
+  shell: java -jar {{ jenkins.cli_dest }} -noKeyAuth -s http://localhost:{{ jenkins_port }} list-plugins | grep ')$' | cut -f 1 -d ' ' | awk 1 ORS=' '
+  register: jenkins_plugins_updates
 
 - name: Update plugins
-  shell: java -jar {{ jenkins.cli_dest }} -s http://localhost:{{ port }} install-plugin {{ item }}
-  with_items: plugins_updates.stdout.split()
-  when: plugins_updates.stdout != ''
+  shell: java -jar {{ jenkins.cli_dest }} -s http://localhost:{{ jenkins_port }} install-plugin {{ item }}
+  with_items: jenkins_plugins_updates.stdout.split()
+  when: jenkins_plugins_updates.stdout != ''
   ignore_errors: yes
   notify:
     - 'Restart Jenkins'

@@ -1,21 +1,20 @@
 ---
-placeholder: 'placeholder'
-port: 8080
-# plugins:
+jenkins_port: 8080
+# jenkins_plugins:
 #   - 'ldap'
 #   - 'github'
 #   - 'translation'
 #   - 'preSCMbuildstep'
 #   - 'gravatar'
 
-proxy: no
-proxy_host: localhost
-proxy_port: 3128
-proxy_login: login
-proxy_password: password
-proxy_url: "http://{{proxy_login}}:{{proxy_password}}@{{proxy_host}}:{{proxy_port}}"
-__no_proxy: "localhost"
-proxy_env:
-  http_proxy: "{{proxy_url}}"
-  https_proxy: "{{proxy_url}}"
-  no_proxy: "{{__no_proxy}}"
+jenkins_proxy: no
+jenkins_proxy_host: localhost
+jenkins_proxy_port: 3128
+jenkins_proxy_login: login
+jenkins_proxy_password: password
+jenkins_proxy_url: "http://{{jenkins_proxy_login}}:{{jenkins_proxy_password}}@{{jenkins_proxy_host}}:{{jenkins_proxy_port}}"
+jenkins___no_proxy: "localhost"
+jenkins_proxy_env:
+  http_proxy: "{{jenkins_proxy_url}}"
+  https_proxy: "{{jenkins_proxy_url}}"
+  no_proxy: "{{jenkins___no_proxy}}"
