@@ -20,7 +20,7 @@
     - 'Restart Jenkins'
 
 - name: List plugins to be updated
-  shell: java -jar {{ jenkins.cli_dest }} -s http://localhost:{{ port }} list-plugins | grep ')$' | cut -f 1 -d ' ' | sed ':a;N;$!ba;s/\n/ /g'
+  shell: java -jar {{ jenkins.cli_dest }} -noKeyAuth -s http://localhost:{{ port }} list-plugins | grep ')$' | cut -f 1 -d ' ' | awk 1 ORS=' '
   register: plugins_updates
 
 - name: Update plugins
