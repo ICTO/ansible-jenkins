@@ -14,6 +14,14 @@
   register: config_changed
   when: ansible_os_family == "Debian"
 
+- name: Configure Jenkins Port and Prefix for FreeBSD
+  lineinfile:
+    dest=/etc/rc.conf
+    regexp=^jenkins_args=
+    line=jenkins_args="--webroot=/usr/local/jenkins/war --httpPort={{ port }} --prefix={{ prefix }}"
+  register: config_changed
+  when: ansible_os_family == "FreeBSD"
+
 - name: Restart jenkins now
   service: name=jenkins state=restarted
   when: config_changed.changed
@@ -27,5 +35,9 @@
   lineinfile: dest=/etc/default/jenkins regexp=^PREFIX= line=PREFIX={{prefix}}
 
 - name: Configure Jenkins E-mail
-  when: email is defined
+  when: email is defined and (ansible_os_family == "Debian" or ansible_os_family == "RedHat")
   template: src=hudson.tasks.Mailer.xml.j2 dest={{ jenkins_lib }}/hudson.tasks.Mailer.xml owner=jenkins group=jenkins mode=0644
+
+- name: Configure Jenkins E-mail
+  when: email is defined and ansible_os_family == "FreeBSD"
+  template: src=hudson.tasks.Mailer.xml.j2 dest=/usr/local/jenkins/hudson.tasks.Mailer.xml owner=jenkins group=jenkins mode=0644

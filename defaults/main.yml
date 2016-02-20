@@ -19,3 +19,4 @@ proxy_env:
   http_proxy: "{{proxy_url}}"
   https_proxy: "{{proxy_url}}"
   no_proxy: "{{__no_proxy}}"
+prefix: "/"
