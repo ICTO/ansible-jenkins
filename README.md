@@ -13,8 +13,10 @@ Use this role to install Jenkins and install/update plugins.
 ## Requires
 
 1. Ansible 1.4 or higher
-2. Debian 7.3 (other deb-based distros should work too)
+2. Debian 7.3, CentOS 6.x, FreeBSD 9 or later
 3. Vagrant (optional)
+4. cURL
+5. `ca_root_nss` certificate suite
 
 ## Usage
 
@@ -49,7 +51,7 @@ with
 
 ### Create host specific variables
 
-Make the host_vars directory where *ansible.host* file is located.
+Make the `host_vars` directory where *ansible.host* file is located.
 
 ```bash
 $ mkdir host_vars

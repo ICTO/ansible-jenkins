@@ -18,15 +18,27 @@
   register: jenkins_install
   when: ansible_os_family == "RedHat"
 
+- name: Install Jenkins for FreeBSD
+  pkgng: name=jenkins state=present
+  register: jenkins_install
+  when: ansible_os_family == "FreeBSD"
+
 - name: Ensure jenkins is running
   service:
     name: jenkins
     state: started
-  when: ansible_os_family == "RedHat"
+  when: ansible_os_family == "RedHat" or ansible_os_family == "FreeBSD"
 
 - name: Start jenkins on boot
   shell: chkconfig jenkins on
   when: ansible_os_family == "RedHat"
+
+- name: Ensure jenkins is running and starting on boot
+  service:
+    name: jenkins
+    state: started
+    enabled: yes
+  when: ansible_os_family == "FreeBSD"
 
 - include: config.yml
 
