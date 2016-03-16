@@ -10,6 +10,9 @@
   shell: java -jar {{ jenkins.cli_dest }} -s http://localhost:{{ port }}{{ prefix }} list-plugins | cut -f 1 -d ' '
   when: plugins is defined
   register: plugins_installed
+  
+- name: Ensure jenkins running before requesting safe restart
+  service: name=jenkins state=started
 
 - name: Install/update plugins
   shell: java -jar {{ jenkins.cli_dest }} -s http://localhost:{{ port }}{{ prefix }} install-plugin {{ item }}
