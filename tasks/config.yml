@@ -34,6 +34,10 @@
   when: prefix is defined and ansible_os_family == "Debian"
   lineinfile: dest=/etc/default/jenkins regexp=^PREFIX= line=PREFIX={{prefix}}
 
+- name: Configure Jenkins Prefix in Launcher for Debian
+  when: prefix is defined and ansible_os_family == "Debian"
+  lineinfile: dest=/etc/default/jenkins regexp="^JENKINS_ARGS=" line='JENKINS_ARGS="--webroot=/var/cache/$NAME/war --httpPort=$HTTP_PORT --ajp13Port=$AJP_PORT --prefix=$PREFIX"'
+
 - name: Configure Jenkins E-mail
   when: email is defined and (ansible_os_family == "Debian" or ansible_os_family == "RedHat")
   template: src=hudson.tasks.Mailer.xml.j2 dest={{ jenkins_lib }}/hudson.tasks.Mailer.xml owner=jenkins group=jenkins mode=0644
