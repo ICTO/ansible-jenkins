@@ -3,11 +3,11 @@
   when: proxy|bool
 
 - name: add proxy settings configuration
-  shell: cat {{ jenkins_dest }}/proxy.groovy | java -jar {{ jenkins.cli_dest }} -s http://localhost:{{ port }}{{ prefix }} groovy =
+  shell: cat {{ jenkins_dest }}/proxy.groovy | {{ jenkins_cli_cmd }} groovy =
   when: proxy|bool
 
 - name: List plugins
-  shell: java -jar {{ jenkins.cli_dest }} -s http://localhost:{{ port }}{{ prefix }} list-plugins | cut -f 1 -d ' '
+  shell: "{{ jenkins_cli_cmd }} list-plugins | cut -f 1 -d ' '"
   when: plugins is defined
   register: plugins_installed
   
@@ -15,7 +15,7 @@
   service: name=jenkins state=started
 
 - name: Install/update plugins
-  shell: java -jar {{ jenkins.cli_dest }} -s http://localhost:{{ port }}{{ prefix }} install-plugin {{ item }}
+  shell: "{{ jenkins_cli_cmd }} install-plugin {{ item }}"
   when: plugins_installed.changed and plugins_installed.stdout.find('{{ item }}') == -1
   with_items: plugins
   ignore_errors: yes
@@ -23,12 +23,12 @@
     - 'Restart Jenkins'
 
 - name: List plugins to be updated
-  shell: java -jar {{ jenkins.cli_dest }} -noKeyAuth -s http://localhost:{{ port }}{{ prefix }} list-plugins | grep ')$' | cut -f 1 -d ' ' | awk 1 ORS=' '
+  shell: "{{ jenkins_cli_cmd }} -noKeyAuth list-plugins | grep ')$' | cut -f 1 -d ' ' | awk 1 ORS=' '"
   register: plugins_updates
   when: (ansible_os_family == "Debian" or ansible_os_family == "RedHat")
 
 - name: Update plugins
-  shell: java -jar {{ jenkins.cli_dest }} -s http://localhost:{{ port }}{{ prefix }} install-plugin {{ item }}
+  shell: "{{ jenkins_cli_cmd }} install-plugin {{ item }}"
   with_items: plugins_updates.stdout.split()
   when: plugins_updates.stdout != ''
   ignore_errors: yes

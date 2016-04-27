@@ -20,3 +20,5 @@ proxy_env:
   https_proxy: "{{proxy_url}}"
   no_proxy: "{{__no_proxy}}"
 prefix: "/"
+# jenkins_admin_user: admin
+# jenkins_admin_password: recommended to be put a vault file
