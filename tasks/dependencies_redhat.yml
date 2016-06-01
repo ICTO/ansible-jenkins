@@ -2,4 +2,4 @@
 
 - name: Install RedHat dependencies
   yum: name={{ item }} state=installed
-  with_items: jenkins.redhat.dependencies
+  with_items: '{{ jenkins_redhat_dependencies }}'

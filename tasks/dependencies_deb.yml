@@ -1,4 +1,4 @@
 ---
 - name: Install Debian dependencies
   apt: name={{ item }} state=installed
-  with_items: jenkins.deb.dependencies
+  with_items: '{{ jenkins_deb_dependencies }}'
