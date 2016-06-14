@@ -1,4 +1,4 @@
 # Safe-restart Jenkins
 - name: Restart Jenkins
   sudo: yes
-  command: "{{ jenkins_cli_cmd }} safe-restart"
+  service: name=jenkins state=restarted  
