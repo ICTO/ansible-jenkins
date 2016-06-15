@@ -5,8 +5,8 @@ jenkins:
   deb:
     repo: 'deb http://pkg.jenkins-ci.org/debian binary/' # Jenkins repository
     dependencies: # Jenkins dependencies
-      - 'openjdk-7-jre'
-      - 'openjdk-7-jdk'
+      - '{{ java_version }}-jre'
+      - '{{ java_version }}-jdk'
       - 'git'
       - 'curl'
   redhat:

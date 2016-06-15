@@ -79,6 +79,7 @@ email:
   smtp_host: 'mail.example.com'
   smtp_ssl: 'true'
   default_email_suffix: '@example.com'
+java_version: "openjdk-7"
 ```
 
 ### Run the playbook
