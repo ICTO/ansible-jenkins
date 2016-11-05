@@ -10,7 +10,7 @@
   when: ansible_os_family == "RedHat"
 
 - name: Configure Jenkins Port for Debian
-  lineinfile: dest=/etc/default/jenkins regexp=^HTTP_PORT= line=HTTP_PORT={{port}}
+  template: src=etc.default.jenkins.j2 dest=/etc/default/jenkins
   register: config_changed
   when: ansible_os_family == "Debian"
 
@@ -29,14 +29,6 @@
 - name: Configure Jenkins Prefix for RedHat
   when: prefix is defined and ansible_os_family == "RedHat"
   lineinfile: dest=/etc/sysconfig/jenkins regexp=^PREFIX= line=PREFIX={{prefix}}
-
-- name: Configure Jenkins Prefix for Debian
-  when: prefix is defined and ansible_os_family == "Debian"
-  lineinfile: dest=/etc/default/jenkins regexp=^PREFIX= line=PREFIX={{prefix}}
-
-- name: Configure Jenkins Prefix in Launcher for Debian
-  when: prefix is defined and ansible_os_family == "Debian"
-  lineinfile: dest=/etc/default/jenkins regexp="^JENKINS_ARGS=" line='JENKINS_ARGS="--webroot=/var/cache/$NAME/war --httpPort=$HTTP_PORT --ajp13Port=$AJP_PORT --prefix=$PREFIX"'
 
 - name: Configure Jenkins E-mail
   when: email is defined and (ansible_os_family == "Debian" or ansible_os_family == "RedHat")
