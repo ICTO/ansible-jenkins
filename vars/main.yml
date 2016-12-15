@@ -11,6 +11,7 @@ jenkins:
       - 'curl'
   redhat:
     dependencies:
+      - 'libselinux-python'
       - 'java'
       - 'git'
       - 'curl'
