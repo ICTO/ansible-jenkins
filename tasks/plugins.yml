@@ -1,5 +1,7 @@
 ---
-- template: src=proxy.groovy dest={{ jenkins_dest }}/proxy.groovy
+- template:
+    src: proxy.groovy
+    dest: "{{ jenkins_dest }}/proxy.groovy"
   when: proxy|bool
 
 - name: add proxy settings configuration
@@ -10,7 +12,7 @@
   shell: "{{ jenkins_cli_cmd }} list-plugins | cut -f 1 -d ' '"
   when: plugins is defined
   register: plugins_installed
-  
+
 - name: Ensure jenkins running before requesting safe restart
   service: name=jenkins state=started
 

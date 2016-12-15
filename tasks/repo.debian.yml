@@ -1,7 +1,11 @@
 ---
 
 - name: Install python-software-properties
-  apt: name=python-software-properties state=installed update_cache=yes cache_valid_time=86400
+  apt:
+    name: python-software-properties
+    state: installed
+    update_cache: yes
+    cache_valid_time: 86400
 
 - name: Install python-pycurl
   apt: name=python-pycurl state=installed
