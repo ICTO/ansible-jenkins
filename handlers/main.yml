@@ -1,4 +1,4 @@
 # Safe-restart Jenkins
 - name: Restart Jenkins
   become: yes
-  command: "{{ jenkins_cli_cmd }} safe-restart"
+  command: "{{ jenkins_cli_cmd }} safe-restart --username {{ jenkins_admin_user }} --password {{ jenkins_admin_password }}"
