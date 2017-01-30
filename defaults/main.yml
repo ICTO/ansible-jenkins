@@ -1,6 +1,7 @@
 ---
 placeholder: 'placeholder'
 port: 8080
+ajp_port: -1
 # plugins:
 #   - 'ldap'
 #   - 'github'
