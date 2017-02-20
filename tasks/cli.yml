@@ -9,7 +9,7 @@
 
 - name: "Create Jenkins CLI destination directory: {{ jenkins_dest }}"
   file:
-    path: "{{ jenkins_dest }}" 
+    path: "{{ jenkins_dest }}"
     state: directory
 
 - name: Get Jenkins CLI
@@ -24,7 +24,7 @@
 
 - name: Get Jenkins updates
   get_url:
-    url: http://updates.jenkins-ci.org/update-center.json
+    url: "{{ jenkins_updates_url }}"
     dest: "{{ jenkins.updates_dest }}"
     thirsty: yes
     mode: 0440
@@ -36,7 +36,7 @@
 
 - name: Get Jenkins updates without proxy
   get_url:
-    url: https://updates.jenkins-ci.org/update-center.json
+    url: "{{ jenkins_updates_url }}"
     dest: "{{ jenkins.updates_dest }}"
     thirsty: yes
     mode: 0440
