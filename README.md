@@ -8,7 +8,8 @@ Use this role to install Jenkins and install/update plugins.
 ## Provides
 
 1. Latest Jenkins server
-2. Jenkins plugins support
+2. Specify version of Jenkins for redhat installation supported.
+3. Jenkins plugins support
 
 ## Requires
 
@@ -46,7 +47,7 @@ with
 
 ```ini
 [jenkins]
-127.0.0.1 ansible_ssh_port=2222 ansible_ssh_user=vagrant ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key 
+127.0.0.1 ansible_ssh_port=2222 ansible_ssh_user=vagrant ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key
 ```
 
 ### Create host specific variables
