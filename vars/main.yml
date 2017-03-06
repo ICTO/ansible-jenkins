@@ -17,5 +17,6 @@ jenkins:
       - 'curl'
   cli_dest: '{{ jenkins_dest }}/jenkins-cli.jar' # Jenkins CLI destination
   updates_dest: '{{ jenkins_dest }}/updates_jenkins.json' # Jenkins updates file
-jenkins_api_url: "http://localhost:{{ port }}{{ prefix }}"
+jenkins_api_url: "http://localhost:{{ port }}"
 jenkins_cli_cmd: "java -jar {{ jenkins.cli_dest }} -s {{ jenkins_api_url }}"
+jenkins_admin_password_file: /root/initialAdminPassword
