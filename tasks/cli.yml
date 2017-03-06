@@ -14,7 +14,7 @@
 
 - name: Get Jenkins CLI
   get_url:
-    url: "{{ jenkins_api_url }}jnlpJars/jenkins-cli.jar"
+    url: "{{ jenkins_api_url }}/jnlpJars/jenkins-cli.jar"
     dest: "{{ jenkins.cli_dest }}"
     mode: 0440
   register: jenkins_local_cli
@@ -46,7 +46,7 @@
   when: not proxy
 
 - name: Update-center Jenkins
-  shell: "cat {{ jenkins.updates_dest }} | sed '1d;$d' | curl -X POST -H 'Accept: application/json' -d @- {{ jenkins_api_url }}updateCenter/byId/default/postBack"
+  shell: "cat {{ jenkins.updates_dest }} | sed '1d;$d' | curl -X POST -H 'Accept: application/json' -d @- {{ jenkins_api_url }}/updateCenter/byId/default/postBack"
   when: jenkins_updates.changed
   notify:
     - 'Restart Jenkins'
