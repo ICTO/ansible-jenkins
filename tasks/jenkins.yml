@@ -20,10 +20,23 @@
   register: jenkins_install
   when: ansible_os_family == "Debian"
 
-- name: Install Jenkins for RedHat
+- name: Install Latest Jenkins Version for RedHat
   yum: name=jenkins state=latest
   register: jenkins_install
-  when: ansible_os_family == "RedHat"
+  when:
+    - ansible_os_family == "RedHat"
+    - (jenkins_ver == "latest") or
+      (jenkins_ver == "") or
+      (jenkins_ver is not defined)
+
+- name: Install Specific Jenkins Version for RedHat
+  yum: name=jenkins-{{ jenkins_ver }} state=installed
+  register: jenkins_install
+  when:
+    - ansible_os_family == "RedHat"
+    - jenkins_ver is defined
+    - jenkins_ver != "latest"
+    - jenkins_ver != ""
 
 - name: Install Jenkins for FreeBSD
   pkgng: name=jenkins state=present
