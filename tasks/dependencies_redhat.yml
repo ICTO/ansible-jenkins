@@ -1,5 +1,9 @@
 ---
 
 - name: Install RedHat dependencies
-  yum: name={{ item }} state=installed
+  yum: name={{ item }} state=present update_cache=yes
   with_items: "{{ jenkins.redhat.dependencies }}"
+  register: task_result
+  until: task_result.rc == 0
+  retries: 10
+  delay: 5
