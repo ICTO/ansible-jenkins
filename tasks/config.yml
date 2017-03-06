@@ -1,4 +1,39 @@
 ---
+- name: wait for jenkins.install.UpgradeWizard.state file to be available
+  wait_for:
+    path: "{{ jenkins_lib }}/jenkins.install.UpgradeWizard.state"
+
+- name: Bypass - jenkins.install.InstallUtil.lastExecVersion
+  copy:
+    src: "{{ jenkins_lib }}/jenkins.install.UpgradeWizard.state"
+    dest: "{{ jenkins_lib }}/jenkins.install.InstallUtil.lastExecVersion"
+    owner: "{{ jenkins_user }}"
+    group: "{{ jenkins_user }}"
+    remote_src: True
+
+- name: Ensure jenkins.install.InstallUtil.lastExecVersion has correct ownership
+  file:
+    path: "{{ jenkins_lib }}/jenkins.install.InstallUtil.lastExecVersion"
+    owner: "{{ jenkins_user }}"
+    group: "{{ jenkins_user }}"
+
+- stat: path="{{ jenkins_lib }}/secrets/initialAdminPassword"
+  register: adminpassword
+
+- name: Get jenkins_admin_password from initialAdminPassword if still in var/lib/jenkins/secrets
+  shell: cat "{{ jenkins_lib }}/secrets/initialAdminPassword"
+  register: jenkins_initial_admin_password
+  when: adminpassword.stat.exists == True
+
+- name: Set jenkins_admin_password from initialAdminPassword if still in var/lib/jenkins/secrets
+  set_fact: jenkins_admin_password="{{ jenkins_initial_admin_password.stdout }}"
+  when: adminpassword.stat.exists == True
+
+- name: Bypass - initialAdminPassword
+  shell: mv {{ jenkins_lib }}/secrets/initialAdminPassword {{ jenkins_admin_password_file }}
+  notify:
+    - Restart Jenkins
+  when: adminpassword.stat.exists == True
 
 - name: Create jenkins configuration for RedHat
   file:
