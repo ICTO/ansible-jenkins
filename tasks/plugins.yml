@@ -19,6 +19,10 @@
 - name: Install/update plugins
   shell: "{{ jenkins_cli_cmd }} install-plugin {{ item }} --username {{ jenkins_admin_user }} --password {{ jenkins_admin_password }}"
   when: plugins_installed.changed and plugins_installed.stdout.find('{{ item }}') == -1
+  register: result
+  until: result.rc == 0
+  retries: 5
+  delay: 10
   with_items: "{{ plugins }}"
   ignore_errors: yes
   notify:
