@@ -1,7 +1,6 @@
 ---
 galaxy_info:
   author: Thomas Berton
-  owner: Thomas Berton
   description: Role to install Jenkins and install/update plugins
   license: MIT
   min_ansible_version: 1.4
