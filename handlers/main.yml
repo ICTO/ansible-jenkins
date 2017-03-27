@@ -2,3 +2,4 @@
 - name: Restart Jenkins
   become: yes
   command: "{{ jenkins_cli_cmd }} safe-restart --username {{ jenkins_admin_user }} --password {{ jenkins_admin_password }}"
+  when: jenkins_admin_user is defined and jenkins_admin_password is defined
