@@ -3,16 +3,21 @@ galaxy_info:
   author: Thomas Berton
   description: Role to install Jenkins and install/update plugins
   license: MIT
-  min_ansible_version: 1.4
+  min_ansible_version: 2.2
   platforms:
-  - name: Ubuntu
-    versions:
-    - precise
-  - name: Debian
-    versions:
-    - wheezy
+    - name: Ubuntu
+      versions:
+        - trusty
+    - name: Debian
+      versions:
+        - jessie
+    - name: FreeBSD
+      versions:
+        - 10
+    - name: EL
+        - 7
   categories:
-  - development
+    - development
 
 dependencies: []
   # List your role dependencies here, one per line. Only

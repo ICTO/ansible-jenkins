@@ -6,11 +6,11 @@
 
 - name: add proxy settings configuration
   shell: cat {{ jenkins_dest }}/proxy.groovy | {{ jenkins_cli_cmd }} groovy =
-  when: proxy|bool
+  when: jenkins_admin_user is defined and jenkins_admin_password is defined and proxy|bool
 
 - name: List plugins
   shell: "{{ jenkins_cli_cmd }} list-plugins --username {{ jenkins_admin_user }} --password {{ jenkins_admin_password }} | cut -f 1 -d ' '"
-  when: plugins is defined
+  when: jenkins_admin_user is defined and jenkins_admin_password is defined and plugins is defined
   register: plugins_installed
 
 - name: Ensure jenkins running before requesting safe restart
@@ -31,12 +31,12 @@
 - name: List plugins to be updated
   shell: "{{ jenkins_cli_cmd }} list-plugins --username {{ jenkins_admin_user }} --password {{ jenkins_admin_password }} | grep ')$' | cut -f 1 -d ' ' | awk 1 ORS=' '"
   register: plugins_updates
-  when: (ansible_os_family == "Debian" or ansible_os_family == "RedHat")
+  when: jenkins_admin_user is defined and jenkins_admin_password is defined and (ansible_os_family == "Debian" or ansible_os_family == "RedHat")
 
 - name: Update plugins
   shell: "{{ jenkins_cli_cmd }} install-plugin {{ item }} --username {{ jenkins_admin_user }} --password {{ jenkins_admin_password }}"
   with_items: "{{ plugins_updates.stdout.split() }}"
-  when: plugins_updates.stdout != ''
+  when: jenkins_admin_user is defined and jenkins_admin_password is defined and plugins_updates.stdout != ''
   ignore_errors: yes
   notify:
     - 'Restart Jenkins'
